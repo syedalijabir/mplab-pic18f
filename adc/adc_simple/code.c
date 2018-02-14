@@ -1,9 +1,18 @@
-/*
-	Two Analog inputs
-	sample and show on PORTC
-	and PORTD
-	using AN0 and AN1
-*/
+//
+// Owner: Ali Jabir
+// Email: syedalijabir@gmail.com
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #include<p18f4520.h>
 
@@ -30,15 +39,11 @@ _endasm
 }
 #pragma code
 
-char dataH,dataL;
-char channel = 0;
-
 void main()
 {
 // ADC Settings
 TRISAbits.TRISA0 = 1; 	// Use as Analog Input
-TRISAbits.TRISA1 = 1; 	// Use as Analog Input
-ADCON1 = 0x0D;
+ADCON1 = 0x07;
 ADCON0 = 0x00;
 ADCON2 = 0xAD;
 ADCON0bits.ADON = 1; 	// Turn ON ADC
@@ -54,29 +59,13 @@ TRISD = 0; 	// Configure as Output
 
 ADCON0bits.GO_DONE=1;
 
-while(5)
-{
-	
+while(5);
 }
 
 void ADC_ISR()
 {
 PIR1bits.ADIF = 0;
-dataH = ADRESH;
-dataL = ADRESL;
-if (channel == 1)
-	{
-		PORTD = dataH;
-		// Settings for AN0
-		ADCON0 = 0x00;
-		channel = 0;
-	}
-	else
-	{
-		PORTC = dataH;
-		// settings for AN1
-		ADCON0 = 0x04;
-		channel = 1;
-	}
+PORTD = ADRESH;
+PORTC = ADRESL;
 ADCON0bits.GO_DONE=1;
 }
