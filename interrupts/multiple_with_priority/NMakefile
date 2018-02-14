@@ -1,0 +1,19 @@
+# MPLAB IDE generated this makefile for use with Microsoft `nmake'.
+# Project: mwp.mcp
+# Date: Tue Oct 22 09:30:52 2013
+
+AS = MPASMWIN.exe
+CC = mcc18.exe
+LD = mplink.exe
+AR = mplib.exe
+RM = del
+
+"mwp.cof" : "code.o"
+	$(LD) /p18F4520 /l"E:\Program Files (x86)\Microchip\mplabc18\v3.38\lib" /k"E:\Program Files (x86)\Microchip\mplabc18\v3.38\bin\LKR" "code.o" /u_CRUNTIME /u_DEBUG /z__MPLAB_BUILD=1 /z__MPLAB_DEBUG=1 /o"mwp.cof" /M"mwp.map" /W
+
+"code.o" : "code.c" "..\..\..\..\..\..\..\..\..\Program Files (x86)\Microchip\mplabc18\v3.38\h\p18f4520.h"
+	$(CC) -p=18F4520 /i"E:\Program Files (x86)\Microchip\mplabc18\v3.38\h" "code.c" -fo="code.o" -D__DEBUG -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+"clean" : 
+	$(RM) "code.o" "mwp.cof" "mwp.hex"
+
